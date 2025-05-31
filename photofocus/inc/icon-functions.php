@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SVG icons related functions and filters
  *
@@ -8,16 +9,17 @@
 /**
  * Add SVG definitions to the footer.
  */
-function photofocus_include_svg_icons() {
+function photofocus_include_svg_icons()
+{
 	// Define SVG sprite file.
-	$svg_icons = get_parent_theme_file_path( '/assets/images/svg-icons.svg' );
+	$svg_icons = get_parent_theme_file_path('/assets/images/svg-icons.svg');
 
 	// If it exists, include it.
-	if ( file_exists( $svg_icons ) ) {
+	if (file_exists($svg_icons)) {
 		require $svg_icons;
 	}
 }
-add_action( 'wp_footer', 'photofocus_include_svg_icons', 9999 );
+add_action('wp_footer', 'photofocus_include_svg_icons', 9999);
 
 /**
  * Return SVG markup.
@@ -31,15 +33,16 @@ add_action( 'wp_footer', 'photofocus_include_svg_icons', 9999 );
  * }
  * @return string SVG markup.
  */
-function photofocus_get_svg( $args = array() ) {
+function photofocus_get_svg($args = array())
+{
 	// Make sure $args are an array.
-	if ( empty( $args ) ) {
-		return __( 'Please define default parameters in the form of an array.', 'photofocus' );
+	if (empty($args)) {
+		return __('Please define default parameters in the form of an array.', 'photofocus');
 	}
 
 	// Define an icon.
-	if ( false === array_key_exists( 'icon', $args ) ) {
-		return __( 'Please define an SVG icon filename.', 'photofocus' );
+	if (false === array_key_exists('icon', $args)) {
+		return __('Please define an SVG icon filename.', 'photofocus');
 	}
 
 	// Set defaults.
@@ -51,7 +54,7 @@ function photofocus_get_svg( $args = array() ) {
 	);
 
 	// Parse args.
-	$args = wp_parse_args( $args, $defaults );
+	$args = wp_parse_args($args, $defaults);
 
 	// Set aria hidden.
 	$aria_hidden = ' aria-hidden="true"';
@@ -70,26 +73,26 @@ function photofocus_get_svg( $args = array() ) {
 	 *
 	 * See https://www.paciellogroup.com/blog/2013/12/using-aria-enhance-svg-accessibility/.
 	 */
-	if ( $args['title'] ) {
+	if ($args['title']) {
 		$aria_hidden     = '';
 		$unique_id       = uniqid();
 		$aria_labelledby = ' aria-labelledby="title-' . $unique_id . '"';
 
-		if ( $args['desc'] ) {
+		if ($args['desc']) {
 			$aria_labelledby = ' aria-labelledby="title-' . $unique_id . ' desc-' . $unique_id . '"';
 		}
 	}
 
 	// Begin SVG markup.
-	$svg = '<svg class="icon icon-' . esc_attr( $args['icon'] ) . '"' . $aria_hidden . $aria_labelledby . ' role="img">';
+	$svg = '<svg class="icon icon-' . esc_attr($args['icon']) . '"' . $aria_hidden . $aria_labelledby . ' role="img">';
 
 	// Display the title.
-	if ( $args['title'] ) {
-		$svg .= '<title id="title-' . $unique_id . '">' . esc_html( $args['title'] ) . '</title>';
+	if ($args['title']) {
+		$svg .= '<title id="title-' . $unique_id . '">' . esc_html($args['title']) . '</title>';
 
 		// Display the desc only if the title is already set.
-		if ( $args['desc'] ) {
-			$svg .= '<desc id="desc-' . $unique_id . '">' . esc_html( $args['desc'] ) . '</desc>';
+		if ($args['desc']) {
+			$svg .= '<desc id="desc-' . $unique_id . '">' . esc_html($args['desc']) . '</desc>';
 		}
 	}
 
@@ -100,11 +103,11 @@ function photofocus_get_svg( $args = array() ) {
 	 *
 	 * See https://core.trac.wordpress.org/ticket/38387.
 	 */
-	$svg .= ' <use href="#icon-' . esc_attr( $args['icon'] ) . '" xlink:href="#icon-' . esc_attr( $args['icon'] ) . '"></use> ';
+	$svg .= ' <use href="#icon-' . esc_attr($args['icon']) . '" xlink:href="#icon-' . esc_attr($args['icon']) . '"></use> ';
 
 	// Add some markup to use as a fallback for browsers that do not support SVGs.
-	if ( $args['fallback'] ) {
-		$svg .= '<span class="svg-fallback icon-' . esc_attr( $args['icon'] ) . '"></span>';
+	if ($args['fallback']) {
+		$svg .= '<span class="svg-fallback icon-' . esc_attr($args['icon']) . '"></span>';
 	}
 
 	$svg .= '</svg>';
@@ -121,28 +124,29 @@ function photofocus_get_svg( $args = array() ) {
  * @param  array   $args        wp_nav_menu() arguments.
  * @return string  $item_output The menu item output with social icon.
  */
-function photofocus_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
+function photofocus_nav_menu_social_icons($item_output, $item, $depth, $args)
+{
 	// Get supported social icons.
 	$social_icons = photofocus_social_links_icons();
 
 	// Change SVG icon inside social links menu if there is supported URL.
-	if ( 'social-menu' === $args->theme_location || 'social-links-menu' === $args->menu_class ) {
-		foreach ( $social_icons as $attr => $value ) {
-			if ( false !== strpos( $item_output, $attr ) ) {
-				$item_output = str_replace( $args->link_after, '</span>' . photofocus_get_svg( array( 'icon' => esc_attr( $value ) ) ), $item_output );
+	if ('social-menu' === $args->theme_location || 'social-links-menu' === $args->menu_class) {
+		foreach ($social_icons as $attr => $value) {
+			if (false !== strpos($item_output, $attr)) {
+				$item_output = str_replace($args->link_after, '</span>' . photofocus_get_svg(array('icon' => esc_attr($value))), $item_output);
 			}
 		}
-	} elseif( 'social-floating' === $args->theme_location ) {
-		foreach ( $social_icons as $attr => $value ) {
-			if ( false !== strpos( $item_output, $attr ) ) {
-				$item_output = str_replace( $args->link_before, photofocus_get_svg( array( 'icon' => esc_attr( $value ) ) ) . '<span>', $item_output );
+	} elseif ('social-floating' === $args->theme_location) {
+		foreach ($social_icons as $attr => $value) {
+			if (false !== strpos($item_output, $attr)) {
+				$item_output = str_replace($args->link_before, photofocus_get_svg(array('icon' => esc_attr($value))) . '<span>', $item_output);
 			}
 		}
 	}
 
 	return $item_output;
 }
-add_filter( 'walker_nav_menu_start_el', 'photofocus_nav_menu_social_icons', 10, 4 );
+add_filter('walker_nav_menu_start_el', 'photofocus_nav_menu_social_icons', 10, 4);
 
 /**
  * Add dropdown icon if menu item has children.
@@ -153,25 +157,27 @@ add_filter( 'walker_nav_menu_start_el', 'photofocus_nav_menu_social_icons', 10, 
  * @param  int    $depth Depth of menu item. Used for padding.
  * @return string $title The menu item's title with dropdown icon.
  */
-function photofocus_dropdown_icon_to_menu_link( $title, $item, $args, $depth ) {
-	if ( 'primary-menu' === $args->theme_location || 'menu-2' === $args->theme_location || 'menu-3' === $args->theme_location ) {
-		foreach ( $item->classes as $value ) {
-			if ( 'menu-item-has-children' === $value || 'page_item_has_children' === $value ) {
-				$title = $title . photofocus_get_svg( array( 'icon' => 'angle-down' ) );
+function photofocus_dropdown_icon_to_menu_link($title, $item, $args, $depth)
+{
+	if ('primary-menu' === $args->theme_location || 'menu-2' === $args->theme_location || 'menu-3' === $args->theme_location) {
+		foreach ($item->classes as $value) {
+			if ('menu-item-has-children' === $value || 'page_item_has_children' === $value) {
+				$title = $title . photofocus_get_svg(array('icon' => 'angle-down'));
 			}
 		}
 	}
 
 	return $title;
 }
-add_filter( 'nav_menu_item_title', 'photofocus_dropdown_icon_to_menu_link', 10, 4 );
+add_filter('nav_menu_item_title', 'photofocus_dropdown_icon_to_menu_link', 10, 4);
 
 /**
  * Returns an array of supported social links (URL and icon name).
  *
  * @return array $social_links_icons
  */
-function photofocus_social_links_icons() {
+function photofocus_social_links_icons()
+{
 	// Supported social links icons.
 	$social_links_icons = array(
 		'behance.net'     => 'behance',
@@ -202,6 +208,7 @@ function photofocus_social_links_icons() {
 		'tumblr.com'      => 'tumblr',
 		'twitch.tv'       => 'twitch',
 		'twitter.com'     => 'twitter',
+		'x.com'           => 'x-twitter',
 		'vimeo.com'       => 'vimeo',
 		'vine.co'         => 'vine',
 		'vk.com'          => 'vk',
@@ -209,6 +216,10 @@ function photofocus_social_links_icons() {
 		'wordpress.com'   => 'wordpress',
 		'yelp.com'        => 'yelp',
 		'youtube.com'     => 'youtube',
+		'bsky.app'        => 'bluesky',
+		'tiktok.com'      => 'tiktok',
+		'tel:'            => 'phone',
+		'/feed'           => 'feed',
 	);
 
 	/**
@@ -218,6 +229,5 @@ function photofocus_social_links_icons() {
 	 *
 	 * @param array $social_links_icons Array of social links icons.
 	 */
-	return apply_filters( 'photofocus_social_links_icons', $social_links_icons );
+	return apply_filters('photofocus_social_links_icons', $social_links_icons);
 }
-
