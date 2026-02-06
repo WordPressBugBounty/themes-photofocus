@@ -417,10 +417,6 @@ function photofocus_scripts() {
 	// Theme block stylesheet.
 	wp_enqueue_style( 'photofocus-block-style', get_theme_file_uri( 'assets/css/blocks.css' ), array( 'photofocus-style' ), '1.0' );
 
-	// Load the html5 shiv.
-	wp_enqueue_script( 'photofocus-html5',  get_theme_file_uri( $path . 'html5' . $min . '.js' ), array(), '3.7.3' );
-	wp_script_add_data( 'photofocus-html5', 'conditional', 'lt IE 9' );
-
 	wp_enqueue_script( 'photofocus-skip-link-focus-fix', get_theme_file_uri( $path . 'skip-link-focus-fix' . $min . '.js' ), array(), '201800703', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -432,7 +428,7 @@ function photofocus_scripts() {
 	$enable_portfolio = get_theme_mod( 'photofocus_portfolio_option', 'disabled' );
 
 	$enable_featured_content = get_theme_mod( 'photofocus_featured_content_option', 'disabled' );
-	
+
 	if ( photofocus_check_section( $enable_featured_content ) ) {
 		wp_register_script( 'jquery-match-height', get_theme_file_uri( $path . 'jquery.matchHeight' . $min . '.js' ), array( 'jquery' ), '201800703', true );
 
@@ -442,7 +438,7 @@ function photofocus_scripts() {
 	//Slider Scripts
 	$enable_slider      = photofocus_check_section( get_theme_mod( 'photofocus_slider_option', 'disabled' ) );
 	$enable_testimonial_slider      = photofocus_check_section( get_theme_mod( 'photofocus_testimonial_option', 'disabled' ) );
-	
+
 	if ( $enable_slider || $enable_testimonial_slider ) {
 		// Enqueue owl carousel css. Must load CSS before JS.
 		wp_enqueue_style( 'owl-carousel-core', get_theme_file_uri( 'assets/css/owl-carousel/owl.carousel' . $min . '.css' ), null, '2.3.4' );
@@ -457,7 +453,7 @@ function photofocus_scripts() {
 
 	$enable_portfolio = get_theme_mod( 'photofocus_portfolio_option', 'disabled' );
 
-	if ( photofocus_check_section( $enable_portfolio ) ){ 
+	if ( photofocus_check_section( $enable_portfolio ) ){
 		$deps[] = 'jquery-masonry';
 	}
 
@@ -495,7 +491,7 @@ add_action( 'wp_enqueue_scripts', 'photofocus_scripts' );
 function photofocus_block_editor_styles() {
 	// Block styles.
 	wp_enqueue_style( 'photofocus-block-editor-style', get_theme_file_uri( 'assets/css/editor-blocks.css' ) );
-	
+
 	// Add custom fonts.
 	wp_enqueue_style( 'photofocus-fonts', photofocus_fonts_url(), array(), null );
 }
