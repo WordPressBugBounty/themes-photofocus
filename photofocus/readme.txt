@@ -2,7 +2,7 @@
 Contributors: catchthemes
 Tags: grid-layout, one-column, two-columns, right-sidebar, custom-background, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-image-header, featured-images, flexible-header, footer-widgets, full-width-template, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready, block-styles, wide-blocks, blog, photography, portfolio
 Requires at least: 5.9
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,6 +40,9 @@ You can check our Theme Demo at https://www.catchthemes.com/demo/photofocus
 For more FAQs, visit https://catchthemes.com/frequently-asked-questions/
 
 == Changelog ==
+
+= 2.1.2 (Released: June 04, 2026) =
+* Updated: WordPress 7.0 ready
 
 = 2.1.1 (Released: December 10, 2025) =
 * Bug Fixed: Deprecated Function WP_Dependencies-add_data() warning after WordPress update 6.9
@@ -149,7 +152,7 @@ For more FAQs, visit https://catchthemes.com/frequently-asked-questions/
 
 == Copyright ==
 
-PhotoFocus WordPress Theme, Copyright 2012-2025 Catchthemes.com
+PhotoFocus WordPress Theme, Copyright 2012-2026 Catchthemes.com
 PhotoFocus is distributed under the terms of the GNU GPL
 
 == Resources ==
